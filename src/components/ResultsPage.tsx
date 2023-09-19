@@ -3,7 +3,7 @@ import React from 'react';
 const ResultsPage = () => {
     return (
         <div>
-            results here
+            results to go here
         </div>
     )
 }
