@@ -19,7 +19,7 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     const keywords = ['starships', 'films', 'vehicles'];
     // Check if any of the keywords includes the search term
     const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm));
-    // Fetch data based on 'matchedKeyword' and refetch when it changes
+    // Enable users to perform partial searches for retrieval from the API"
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
         // we need to set sorting to false so 'data.results' is passed to the components initially
         setSorting(false)
@@ -47,6 +47,19 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
         setSorting(true);
     };
 
+    // Sort Starships or Vehicle by name
+    const sortByName = () => {
+        // Create a copy of data.results to avoid mutating the original array
+        const sortedData = [...data.results].sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        });
+        // Set the sorted data in state
+        setSortedResults(sortedData);
+        setSorting(true);
+    };
+
+
+
 
     return (
         <>
@@ -54,13 +67,13 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
             {matchedKeyword && (
                 <>
                     {matchedKeyword.includes('starships') && (
-                        <Starships data={sorting ? sortedResults : data.results} />
+                        <Starships data={sorting ? sortedResults : data.results} sortByName={sortByName} />
                     )}
                     {matchedKeyword.includes('films') && (
                         <Films data={sorting ? sortedResults : data.results} sortByTitle={sortByTitle} />
                     )}
                     {matchedKeyword.includes('vehicles') && (
-                        <Vehicles data={sorting ? sortedResults : data.results} />
+                        <Vehicles data={sorting ? sortedResults : data.results} sortByName={sortByName} />
                     )}
                 </>
             )}

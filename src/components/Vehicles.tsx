@@ -14,10 +14,12 @@ interface VehicleData {
 
 interface VehiclesProps {
     data: VehicleData[];
+    sortByName: () => void;
 }
 
-const Vehicles: React.FC<VehiclesProps> = ({ data }) => (
+const Vehicles: React.FC<VehiclesProps> = ({ data, sortByName }) => (
     <>
+        <button onClick={sortByName}>Sort by Name</button>
         {data.map((vehicle, index) => (
             <div key={index}>
                 <h2>Name: {vehicle.name}</h2>
