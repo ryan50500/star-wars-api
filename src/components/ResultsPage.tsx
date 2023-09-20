@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import Starships from './Starships';
 import Films from './Films';
@@ -21,34 +21,46 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
         return response.json();
     });
 
+    const [sortedResults, setSortedResults] = useState<any[]>([]);
+    const [sorting, setSorting] = useState(false);
+
     if (isLoading) return <div>Loading...</div>;
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
 
+    // Function to sort data by title
+    const sortByTitle = () => {
+        if (data?.results && data.results.length > 0) {
+            // Create a copy of data.results to avoid mutating the original array
+            const sortedData = [...data.results].sort((a, b) => {
+                return a.title.localeCompare(b.title);
+            });
 
-    // we are guna sort data here
-    function sortByTitle() {
-        console.log('our initial data is..' + data);
-
-        data.results.sort((a: string, b: string) => {
-            return a.localeCompare(b)
-        })
-        console.log('the new order is... ' + data);
-    }
+            // Set the sorted data in state
+            setSortedResults(sortedData);
+            setSorting(true);
+        }
+    };
 
     return (
         <>
             {matchedKeyword && <h2>{matchedKeyword}:</h2>}
             {matchedKeyword && (
                 <>
-                    {matchedKeyword.includes('starships') && <Starships data={data.results} />}
-                    {matchedKeyword.includes('films') && <Films data={data.results} sortByTitle={sortByTitle} />}
-                    {matchedKeyword.includes('vehicles') && <Vehicles data={data.results} />}
+                    {matchedKeyword.includes('starships') && (
+                        <Starships data={sorting ? sortedResults : data.results} />
+                    )}
+                    {matchedKeyword.includes('films') && (
+                        <Films data={sorting ? sortedResults : data.results} sortByTitle={sortByTitle} />
+                    )}
+                    {matchedKeyword.includes('vehicles') && (
+                        <Vehicles data={sorting ? sortedResults : data.results} />
+                    )}
                 </>
             )}
-            {!matchedKeyword && <h2>Please search for Films, Starships or Vehicles</h2>}
+            {!matchedKeyword && <h2>Please search for Films, Starships, or Vehicles</h2>}
         </>
     );
-}
+};
 
 export default ResultsPage;
