@@ -9,6 +9,7 @@ interface ResultsPageProps {
 }
 
 const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
+
     const keywords = ['starships', 'films', 'vehicles'];
 
     // Check if the entered search term includes any of the keywords
@@ -16,6 +17,9 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
 
     // Fetch data based on 'matchedKeyword' and refetch when it changes
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
+        // we need to set sorting to false so 'data.results' is passed to the components initially
+        setSorting(false)
+        console.log('we need this to re-render')
         if (!matchedKeyword) return [];
         const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`);
         return response.json();
@@ -28,18 +32,17 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
 
+
     // Function to sort data by title
     const sortByTitle = () => {
-        if (data?.results && data.results.length > 0) {
-            // Create a copy of data.results to avoid mutating the original array
-            const sortedData = [...data.results].sort((a, b) => {
-                return a.title.localeCompare(b.title);
-            });
+        // Create a copy of data.results to avoid mutating the original array
+        const sortedData = [...data.results].sort((a, b) => {
+            return a.title.localeCompare(b.title);
+        });
 
-            // Set the sorted data in state
-            setSortedResults(sortedData);
-            setSorting(true);
-        }
+        // Set the sorted data in state
+        setSortedResults(sortedData);
+        setSorting(true);
     };
 
     return (
