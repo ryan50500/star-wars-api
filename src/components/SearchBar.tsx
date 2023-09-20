@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-// const SearchBar = ({ onSearch }) => {
+interface IsearchInterface {
+    searchTerm: string,
+    setSearchTerm: (searchTerm: string) => void;
+}
 
-//     const handleInputChange = (e) => {
-//         setSearchTerm(e.target.value);
-//     };
+const SearchBar = ({ setSearchTerm, searchTerm }: IsearchInterface) => {
 
-//     const handleSearch = () => {
-//         onSearch(searchTerm);
-//     };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
 
-//     return (
-//         <div>
-//             <input
-//                 type="text"
-//                 value={searchTerm}
-//                 onChange={handleInputChange}
-//                 placeholder="Enter search term "
-//             />
-//             <button onClick={handleSearch}>Search</button>
-//         </div>
-//     );
-// };
+    return (
+        <div>
+            <input
+                type="text"
+                value={searchTerm}
+                onChange={handleInputChange}
+                placeholder="Enter search term "
+            />
+        </div>
+    );
+};
 
-// export default SearchBar;
+export default SearchBar;
