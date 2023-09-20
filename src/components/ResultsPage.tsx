@@ -10,11 +10,15 @@ interface ResultsPageProps {
 
 const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
 
+    // Sorting of fetched results
+    const [sortedResults, setSortedResults] = useState<any[]>([]);
+    const [sorting, setSorting] = useState(false);
+
+
+    // Fetch data using React Query
     const keywords = ['starships', 'films', 'vehicles'];
-
-    // Check if the entered search term includes any of the keywords
+    // Check if any of the keywords includes the search term
     const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm));
-
     // Fetch data based on 'matchedKeyword' and refetch when it changes
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
         // we need to set sorting to false so 'data.results' is passed to the components initially
@@ -25,25 +29,24 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
         return response.json();
     });
 
-    const [sortedResults, setSortedResults] = useState<any[]>([]);
-    const [sorting, setSorting] = useState(false);
 
     if (isLoading) return <div>Loading...</div>;
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
 
 
-    // Function to sort data by title
+
+    // Sort Films by title
     const sortByTitle = () => {
         // Create a copy of data.results to avoid mutating the original array
         const sortedData = [...data.results].sort((a, b) => {
             return a.title.localeCompare(b.title);
         });
-
         // Set the sorted data in state
         setSortedResults(sortedData);
         setSorting(true);
     };
+
 
     return (
         <>
