@@ -10,11 +10,13 @@ interface FilmData {
 }
 
 interface FilmsProps {
-    data: FilmData[];
+    data: FilmData[],
+    sortByTitle: () => void;
 }
 
-const Films: React.FC<FilmsProps> = ({ data }) => (
+const Films: React.FC<FilmsProps> = ({ data, sortByTitle }) => (
     <>
+        <button onClick={sortByTitle}>Sort by Title</button>
         {data.map((film, index) => (
             <div key={index}>
                 <h2>Title: {film.title}</h2>

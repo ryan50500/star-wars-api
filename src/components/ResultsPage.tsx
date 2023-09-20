@@ -25,13 +25,24 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
 
+
+    // we are guna sort data here
+    function sortByTitle() {
+        console.log('our initial data is..' + data);
+
+        data.results.sort((a: string, b: string) => {
+            return a.localeCompare(b)
+        })
+        console.log('the new order is... ' + data);
+    }
+
     return (
         <>
             {matchedKeyword && <h2>{matchedKeyword}:</h2>}
             {matchedKeyword && (
                 <>
                     {matchedKeyword.includes('starships') && <Starships data={data.results} />}
-                    {matchedKeyword.includes('films') && <Films data={data.results} />}
+                    {matchedKeyword.includes('films') && <Films data={data.results} sortByTitle={sortByTitle} />}
                     {matchedKeyword.includes('vehicles') && <Vehicles data={data.results} />}
                 </>
             )}
