@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import Starships from './Starships';
 import Films from './Films';
@@ -9,34 +9,35 @@ interface ResultsPageProps {
 }
 
 const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
+    const keywords = ['starships', 'films', 'vehicles'];
 
-    const { data, isLoading, error } = useQuery(['products', searchTerm], async () => {
+    // Check if the entered search term includes any of the keywords
+    const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm));
 
-        const response = await fetch(`https://swapi.dev/api/${searchTerm}/`);
+    // Fetch data based on 'matchedKeyword' and refetch when it changes
+    const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
+        if (!matchedKeyword) return [];
+        const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`);
         return response.json();
     });
 
+    if (isLoading) return <div>Loading...</div>;
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error instanceof Error) {
-        return <div>the error is: {error.message}</div>;
-    }
-
-    console.log(data.results);
-
+    if (error instanceof Error) return <div>Error: {error.message}</div>;
 
     return (
         <>
-            <h2>{searchTerm}:</h2>
-            {/* Conditionally render the relevant component based on searchTerm */}
-            {searchTerm === 'starships' && <Starships data={data.results} />}
-            {searchTerm === 'films' && <Films data={data.results} />}
-            {searchTerm === 'vehicles' && <Vehicles data={data.results} />}
+            {matchedKeyword && <h2>{matchedKeyword}:</h2>}
+            {matchedKeyword && (
+                <>
+                    {matchedKeyword.includes('starships') && <Starships data={data.results} />}
+                    {matchedKeyword.includes('films') && <Films data={data.results} />}
+                    {matchedKeyword.includes('vehicles') && <Vehicles data={data.results} />}
+                </>
+            )}
+            {!matchedKeyword && <h2>Please search for Films, Starships or Vehicles</h2>}
         </>
     );
 }
 
-export default ResultsPage
+export default ResultsPage;
