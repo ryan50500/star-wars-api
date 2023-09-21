@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import Starships from './Starships';
 import Films from './Films';
 import Vehicles from './Vehicles';
+import Sorting from './Sorting';
 
 interface ResultsPageProps {
     searchTerm: string;
@@ -18,7 +19,7 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     // Fetch data using React Query
     const keywords = ['starships', 'films', 'vehicles'];
     // Check if any of the keywords includes the search term
-    const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm));
+    const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm)) || '';
     // Enable users to perform partial searches for retrieval from the API"
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
         // we need to set sorting to false so 'data.results' is passed to the components initially
@@ -35,46 +36,17 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     if (error instanceof Error) return <div>Error: {error.message}</div>;
 
 
-
-    // Sort Films by title
-    const sortByTitle = () => {
-        // Create a copy of data.results to avoid mutating the original array
-        const sortedData = [...data.results].sort((a, b) => {
-            return a.title.localeCompare(b.title);
-        });
-        // Set the sorted data in state
-        setSortedResults(sortedData);
-        setSorting(true);
-    };
-
-    // Sort Starships or Vehicle by name
-    const sortByName = () => {
-        // Create a copy of data.results to avoid mutating the original array
-        const sortedData = [...data.results].sort((a, b) => {
-            return a.name.localeCompare(b.name);
-        });
-        // Set the sorted data in state
-        setSortedResults(sortedData);
-        setSorting(true);
-    };
-
-
-
-
     return (
         <>
             {matchedKeyword && <h2>{matchedKeyword}:</h2>}
+
+            <Sorting {...{ matchedKeyword, data: data.results, setSortedResults, setSorting }} />
+
             {matchedKeyword && (
                 <>
-                    {matchedKeyword.includes('starships') && (
-                        <Starships data={sorting ? sortedResults : data.results} sortByName={sortByName} />
-                    )}
-                    {matchedKeyword.includes('films') && (
-                        <Films data={sorting ? sortedResults : data.results} sortByTitle={sortByTitle} />
-                    )}
-                    {matchedKeyword.includes('vehicles') && (
-                        <Vehicles data={sorting ? sortedResults : data.results} sortByName={sortByName} />
-                    )}
+                    {matchedKeyword.includes('starships') && <Starships data={sorting ? sortedResults : data.results} />}
+                    {matchedKeyword.includes('films') && <Films data={sorting ? sortedResults : data.results} />}
+                    {matchedKeyword.includes('vehicles') && <Vehicles data={sorting ? sortedResults : data.results} />}
                 </>
             )}
             {!matchedKeyword && <h2>Please search for Films, Starships, or Vehicles</h2>}

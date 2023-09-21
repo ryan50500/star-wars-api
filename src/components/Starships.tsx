@@ -14,12 +14,10 @@ interface StarshipData {
 
 interface StarshipsProps {
     data: StarshipData[];
-    sortByName: () => void;
 }
 
-const Starships: React.FC<StarshipsProps> = ({ data, sortByName }) => (
+const Starships: React.FC<StarshipsProps> = ({ data }) => (
     <>
-        <button onClick={sortByName}>Sort by Name</button>
         {data.map((starship, index) => (
             <div key={index}>
                 <h2>Name: {starship.name}</h2>
