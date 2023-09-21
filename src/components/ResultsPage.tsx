@@ -21,29 +21,35 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     // Set matchedKeyword to the user search term.
     // Fallback value of empty string ensures 'matchedKeyword' is never undefined or null.
     const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm)) || '';
-    console.log('adaasdsaa' + matchedKeyword)
 
 
     // Prefetch data on page load so user can search and retrieve data fast
     useEffect(() => {
         const prefetchData = async () => {
             for (const keyword of keywords) {
-                const response = await fetch(`https://swapi.dev/api/${keyword}/`);
-                const data = await response.json();
-                const queryFn = () => data;
-                queryClient.prefetchQuery(['products', keyword], queryFn);
+                try {
+                    const response = await fetch(`https://swapi.dev/api/${keyword}/`);
+                    const data = await response.json();
+                    const queryFn = () => data;
+                    queryClient.prefetchQuery(['products', keyword], queryFn);
+                } catch (error) {
+                    // Handle the error
+                    console.error(error);
+                }
             }
         };
         prefetchData();
     }, []);
 
+    const numbers: any[] = [];
+
+    console.log(numbers[1]); // Runtime error: trying to access an element of an empty array
 
 
     // Enable users to perform partial searches for retrieval from the API
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
         // we need to set sorting to false so 'data.results' is passed to the components initially
         setSorting(false)
-        console.log('we need this to re-render')
         if (!matchedKeyword) return [];
         const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`);
         return response.json();
