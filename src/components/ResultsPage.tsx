@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
 import Starships from './Starships';
 import Films from './Films';
 import Vehicles from './Vehicles';
@@ -10,17 +10,34 @@ interface ResultsPageProps {
 }
 
 const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
+    const queryClient = useQueryClient();
 
     // Sorting of fetched results
     const [sortedResults, setSortedResults] = useState<any[]>([]);
     const [sorting, setSorting] = useState(false);
 
-
-    // Fetch data using React Query
+    // Keywords for fetching specific data ('starships', 'films', 'vehicles')
     const keywords = ['starships', 'films', 'vehicles'];
-    // Check if any of the keywords includes the search term
+    // Check if any of the keywords includes the user search term and assign it as a value of 'matchedKeyword'
     const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm)) || '';
-    // Enable users to perform partial searches for retrieval from the API"
+
+
+    // Prefetch data on page load so user can search and retrieve data fast
+    useEffect(() => {
+        const prefetchData = async () => {
+            for (const keyword of keywords) {
+                const response = await fetch(`https://swapi.dev/api/${keyword}/`);
+                const data = await response.json();
+                const queryFn = () => data;
+                queryClient.prefetchQuery(['products', keyword], queryFn);
+            }
+        };
+        prefetchData();
+    }, []);
+
+
+
+    // Enable users to perform partial searches for retrieval from the API
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
         // we need to set sorting to false so 'data.results' is passed to the components initially
         setSorting(false)
@@ -30,7 +47,6 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
         return response.json();
     });
 
-
     if (isLoading) return <div>Loading...</div>;
 
     if (error instanceof Error) return <div>Error: {error.message}</div>;
@@ -39,9 +55,7 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     return (
         <>
             {matchedKeyword && <h2>{matchedKeyword}:</h2>}
-
             <Sorting {...{ matchedKeyword, data: data.results, setSortedResults, setSorting }} />
-
             {matchedKeyword && (
                 <>
                     {matchedKeyword.includes('starships') && <Starships data={sorting ? sortedResults : data.results} />}

@@ -14,7 +14,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      <ReactQueryDevtools /> {/* Optional: Enable devtools for development */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </React.StrictMode >
 );

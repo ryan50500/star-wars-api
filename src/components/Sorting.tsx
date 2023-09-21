@@ -1,21 +1,15 @@
 import React from 'react';
 
-interface ISortingInterface {
+interface SortingInterface {
     matchedKeyword: string;
     data: Array<any>;
     setSorting: React.Dispatch<React.SetStateAction<boolean>>;
     setSortedResults: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const Sorting = ({ matchedKeyword, data, setSorting, setSortedResults }: ISortingInterface) => {
+const Sorting = ({ matchedKeyword, data, setSorting, setSortedResults }: SortingInterface) => {
     const sortOrder = () => {
-        let sortByProperty: string;
-
-        if (matchedKeyword.includes('starships') || matchedKeyword.includes('vehicles')) {
-            sortByProperty = 'name';
-        } else if (matchedKeyword.includes('films')) {
-            sortByProperty = 'title';
-        }
+        const sortByProperty = matchedKeyword.includes('starships') || matchedKeyword.includes('vehicles') ? 'name' : 'title';
 
         const sortedData = [...data].sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
 
@@ -26,7 +20,7 @@ const Sorting = ({ matchedKeyword, data, setSorting, setSortedResults }: ISortin
     return (
         <div>
             <button onClick={sortOrder}>
-                {matchedKeyword.includes('starships') || matchedKeyword.includes('vehicles') ? 'sort by name' : 'sort by title'}
+                {matchedKeyword.includes('starships') || matchedKeyword.includes('vehicles') ? 'Sort by name' : 'Sort by title'}
             </button>
         </div>
     );
