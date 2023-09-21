@@ -1,5 +1,5 @@
-
 import React from 'react';
+import styles from '../styles/Grid.module.css'; // Import the CSS module
 
 interface VehicleData {
     name: string;
@@ -17,9 +17,9 @@ interface VehiclesProps {
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({ data }) => (
-    <>
+    <div className={styles.grid__container}> {/* Use the grid container style */}
         {data.map((vehicle, index) => (
-            <div key={index}>
+            <div key={index} className={styles.gridItem}> {/* Use the grid item style */}
                 <h2>Name: {vehicle.name}</h2>
                 <h2>Model: {vehicle.model}</h2>
                 <h2>Manufacturer: {vehicle.manufacturer}</h2>
@@ -30,7 +30,7 @@ const Vehicles: React.FC<VehiclesProps> = ({ data }) => (
                 <h2>Cargo Capacity: {vehicle.cargo_capacity}</h2>
             </div>
         ))}
-    </>
+    </div>
 );
 
 export default Vehicles;
