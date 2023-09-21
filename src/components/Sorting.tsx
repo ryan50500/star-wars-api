@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SortingInterface {
-    matchedKeyword: string;
+    matchedKeyword: string,
     data: Array<any>;
     setSorting: React.Dispatch<React.SetStateAction<boolean>>;
     setSortedResults: React.Dispatch<React.SetStateAction<any[]>>;

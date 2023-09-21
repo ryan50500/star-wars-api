@@ -17,9 +17,11 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     const [sorting, setSorting] = useState(false);
 
     // Keywords for fetching specific data ('starships', 'films', 'vehicles')
-    const keywords = ['starships', 'films', 'vehicles'];
-    // Check if any of the keywords includes the user search term and assign it as a value of 'matchedKeyword'
+    const keywords = ['films', 'starships', 'vehicles'];
+    // Set matchedKeyword to the user search term.
+    // Fallback value of empty string ensures 'matchedKeyword' is never undefined or null.
     const matchedKeyword = keywords.find(keyword => keyword.includes(searchTerm)) || '';
+    console.log('adaasdsaa' + matchedKeyword)
 
 
     // Prefetch data on page load so user can search and retrieve data fast
