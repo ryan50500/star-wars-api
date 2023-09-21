@@ -41,9 +41,6 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
         prefetchData();
     }, []);
 
-    const numbers: any[] = [];
-
-    console.log(numbers[1]); // Runtime error: trying to access an element of an empty array
 
 
     // Enable users to perform partial searches for retrieval from the API
