@@ -1,7 +1,18 @@
-/* Grid.module.css */
 
 .grid__container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust column width as needed */
-    gap: 50px; /* Adjust the gap between grid items */
-  }
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 50px;
+    margin: 20px 50px;
+}
+.grid__container div h2 {
+    margin: 10px 0;
+}
+.grid__container div p{
+    margin: 10px 0;
+}
+@media (max-width: 767px) {
+    .grid__container {
+        grid-template-columns: repeat(1, minmax(300px, 1fr));
+   }
+}

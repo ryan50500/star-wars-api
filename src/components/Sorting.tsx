@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../styles/Sorting.module.css';
 
 interface SortingInterface {
     matchedKeyword: string,
@@ -18,8 +19,8 @@ const Sorting = ({ matchedKeyword, data, setSorting, setSortedResults }: Sorting
     };
 
     return (
-        <div>
-            <button onClick={sortOrder}>
+        <div> {/* Use the grid container style */}
+            <button onClick={sortOrder} className={styles.sort__buton}>
                 {matchedKeyword.includes('starships') || matchedKeyword.includes('vehicles') ? 'Sort by name' : 'Sort by title'}
             </button>
         </div>

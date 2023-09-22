@@ -1,0 +1,14 @@
+
+.sort__buton {
+    margin: 20px 0 0 50px;
+    padding: 5px 10px;
+    font-size: 17px;
+}
+.sort__buton:hover {
+    cursor: pointer;
+}
+@media (max-width: 767px) {
+    .grid__container {
+        grid-template-columns: repeat(1, minmax(300px, 1fr));
+   }
+}

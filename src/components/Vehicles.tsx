@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/Grid.module.css'; // Import the CSS module
+import styles from '../styles/Grid.module.css';
 
 interface VehicleData {
     name: string;
@@ -17,17 +17,31 @@ interface VehiclesProps {
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({ data }) => (
-    <div className={styles.grid__container}> {/* Use the grid container style */}
+    <div className={styles.grid__container}>
         {data.map((vehicle, index) => (
-            <div key={index} className={styles.gridItem}> {/* Use the grid item style */}
+            <div key={index}>
                 <h2>Name: {vehicle.name}</h2>
-                <h2>Model: {vehicle.model}</h2>
-                <h2>Manufacturer: {vehicle.manufacturer}</h2>
-                <h2>Cost in Credits: {vehicle.cost_in_credits}</h2>
-                <h2>Length: {vehicle.length}</h2>
-                <h2>Crew: {vehicle.crew}</h2>
-                <h2>Passengers: {vehicle.passengers}</h2>
-                <h2>Cargo Capacity: {vehicle.cargo_capacity}</h2>
+                <p>
+                    <strong>Model:</strong> {vehicle.model}
+                </p>
+                <p>
+                    <strong>Manufacturer:</strong> {vehicle.manufacturer}
+                </p>
+                <p>
+                    <strong>Cost in Credits:</strong> {vehicle.cost_in_credits}
+                </p>
+                <p>
+                    <strong>Length:</strong> {vehicle.length}
+                </p>
+                <p>
+                    <strong>Crew:</strong> {vehicle.crew}
+                </p>
+                <p>
+                    <strong>Passengers:</strong> {vehicle.passengers}
+                </p>
+                <p>
+                    <strong>Cargo Capacity:</strong> {vehicle.cargo_capacity}
+                </p>
             </div>
         ))}
     </div>

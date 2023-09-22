@@ -59,8 +59,8 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
 
     return (
         <>
-            {matchedKeyword && <h2>{matchedKeyword}:</h2>}
             <Sorting {...{ matchedKeyword, data: data.results, setSortedResults, setSorting }} />
+            {matchedKeyword && <h1 style={{ margin: '20px 0 20px 50px' }}>{matchedKeyword}:</h1>}
             {matchedKeyword && (
                 <>
                     {matchedKeyword.includes('starships') && <Starships data={sorting ? sortedResults : data.results} />}

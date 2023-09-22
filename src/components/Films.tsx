@@ -1,5 +1,5 @@
-
 import React from 'react';
+import styles from '../styles/Grid.module.css';
 
 interface FilmData {
     title: string;
@@ -10,20 +10,30 @@ interface FilmData {
 }
 
 interface FilmsProps {
-    data: FilmData[],
+    data: FilmData[];
 }
 
 const Films: React.FC<FilmsProps> = ({ data }) => (
     <>
-        {data.map((film, index) => (
-            <div key={index}>
-                <h2>Title: {film.title}</h2>
-                <h2>Episode: {film.episode_id}</h2>
-                <h2>Director: {film.director}</h2>
-                <h2>Producer: {film.producer}</h2>
-                <h2>Release Date: {film.release_date}</h2>
-            </div>
-        ))}
+        <div className={styles.grid__container}>
+            {data.map((film, index) => (
+                <div key={index}>
+                    <h2>Title: {film.title}</h2>
+                    <p>
+                        <strong>Episode:</strong> {film.episode_id}
+                    </p>
+                    <p>
+                        <strong>Director:</strong> {film.director}
+                    </p>
+                    <p>
+                        <strong>Producer:</strong> {film.producer}
+                    </p>
+                    <p>
+                        <strong>Release Date:</strong> {film.release_date}
+                    </p>
+                </div>
+            ))}
+        </div>
     </>
 );
 

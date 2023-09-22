@@ -1,5 +1,5 @@
-
 import React from 'react';
+import styles from '../styles/Grid.module.css';
 
 interface StarshipData {
     name: string;
@@ -18,18 +18,34 @@ interface StarshipsProps {
 
 const Starships: React.FC<StarshipsProps> = ({ data }) => (
     <>
-        {data.map((starship, index) => (
-            <div key={index}>
-                <h2>Name: {starship.name}</h2>
-                <h2>Model: {starship.model}</h2>
-                <h2>Manufacturer: {starship.manufacturer}</h2>
-                <h2>Cost in Credits: {starship.cost_in_credits}</h2>
-                <h2>Length: {starship.length}</h2>
-                <h2>Crew: {starship.crew}</h2>
-                <h2>Passengers: {starship.passengers}</h2>
-                <h2>Cargo Capacity: {starship.cargo_capacity}</h2>
-            </div>
-        ))}
+        <div className={styles.grid__container}>
+            {data.map((starship, index) => (
+                <div key={index}>
+                    <h2>Name: {starship.name}</h2>
+                    <p>
+                        <strong>Model:</strong> {starship.model}
+                    </p>
+                    <p>
+                        <strong>Manufacturer:</strong> {starship.manufacturer}
+                    </p>
+                    <p>
+                        <strong>Cost in Credits:</strong> {starship.cost_in_credits}
+                    </p>
+                    <p>
+                        <strong>Length:</strong> {starship.length}
+                    </p>
+                    <p>
+                        <strong>Crew:</strong> {starship.crew}
+                    </p>
+                    <p>
+                        <strong>Passengers:</strong> {starship.passengers}
+                    </p>
+                    <p>
+                        <strong>Cargo Capacity:</strong> {starship.cargo_capacity}
+                    </p>
+                </div>
+            ))}
+        </div>
     </>
 );
 
