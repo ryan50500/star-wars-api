@@ -1,7 +1,7 @@
 .sort__wrapper {
     display: flex;
 }
-.sort__buton {
+.sort__button {
     padding: 5px 10px;
     font-size: 17px;
 }

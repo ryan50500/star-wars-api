@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/Grid.module.css';
 
+// Define the shape of the Starships data
 interface StarshipData {
     name: string;
     model: string;
@@ -12,15 +13,19 @@ interface StarshipData {
     cargo_capacity: string;
 }
 
+// Define the props for the Starships component
 interface StarshipsProps {
     data: StarshipData[];
 }
 
+// Define the Starships component
 const Starships: React.FC<StarshipsProps> = ({ data }) => (
     <>
+        {/* Render the list of Starships */}
         <div className={styles.grid__container}>
             {data.map((starship, index) => (
                 <div key={index}>
+                    {/* Display Starships information */}
                     <h2>Name: {starship.name}</h2>
                     <p>
                         <strong>Model:</strong> {starship.model}
