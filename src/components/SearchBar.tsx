@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../styles/SearchBar.module.css'
 
 interface IsearchInterface {
     searchTerm: string,
@@ -12,12 +13,15 @@ const SearchBar = ({ setSearchTerm, searchTerm }: IsearchInterface) => {
     };
 
     return (
-        <div>
+        <div className={styles.search__bar}>
+            <label htmlFor="searchInput">Search for films, vehicles or starships!</label>
             <input
                 type="text"
                 value={searchTerm}
                 onChange={handleInputChange}
                 placeholder="Enter search term "
+                id="searchInput"
+                name="search"
             />
         </div>
     );

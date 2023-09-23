@@ -19,7 +19,8 @@ const Sorting = ({ matchedKeyword, data, setSorting, setSortedResults }: Sorting
     };
 
     return (
-        <div> {/* Use the grid container style */}
+        <div className={styles.sort__wrapper}> {/* Use the grid container style */}
+            {<h1 style={{ margin: '0 30px 0 50px' }}>{matchedKeyword}:</h1>}
             <button onClick={sortOrder} className={styles.sort__buton}>
                 {matchedKeyword.includes('starships') || matchedKeyword.includes('vehicles') ? 'Sort by name' : 'Sort by title'}
             </button>

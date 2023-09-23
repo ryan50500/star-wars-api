@@ -45,7 +45,7 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
 
     // Enable users to perform partial searches for retrieval from the API
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
-        // we need to set sorting to false so 'data.results' is passed to the components initially
+        // we need to set sorting to false so the data (without being sorted) is passed to the components initially
         setSorting(false)
         if (!matchedKeyword) return [];
         const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`);
@@ -60,7 +60,7 @@ const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
     return (
         <>
             <Sorting {...{ matchedKeyword, data: data.results, setSortedResults, setSorting }} />
-            {matchedKeyword && <h1 style={{ margin: '20px 0 20px 50px' }}>{matchedKeyword}:</h1>}
+            {/* {matchedKeyword && <h1 style={{ margin: '20px 0 20px 50px' }}>{matchedKeyword}:</h1>} */}
             {matchedKeyword && (
                 <>
                     {matchedKeyword.includes('starships') && <Starships data={sorting ? sortedResults : data.results} />}
