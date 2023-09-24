@@ -45,5 +45,5 @@ export function useDataFetching(searchTerm: string, setSorting: React.Dispatch<R
         return response.json();
     });
 
-    return { data, isLoading, error, matchedKeyword }; // Include matchedKeyword in the return
+    return { data, isLoading, error, matchedKeyword };
 }

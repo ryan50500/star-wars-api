@@ -4,7 +4,7 @@ import Films from './Films';
 import Vehicles from './Vehicles';
 import Sorting from './Sorting';
 import Loading from './Loading';
-import { useDataFetching } from './useDataFetching'; // Import the custom hook
+import { useDataFetching } from '../hooks/useDataFetching'; // Import the custom hook
 
 interface ResultsPageProps {
     searchTerm: string;
