@@ -26,7 +26,7 @@ const Films: React.FC<FilmsProps> = ({ data }) => (
                     <h2>Title: {film.title}</h2>
                     <p>
                         <strong>Episode:</strong> {film.episode_id}
-                    </p>s
+                    </p>
                     <p>
                         <strong>Director:</strong> {film.director}
                     </p>

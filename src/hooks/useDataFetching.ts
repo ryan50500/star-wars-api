@@ -2,8 +2,11 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
+
 export function useDataFetching(searchTerm: string, setSorting: React.Dispatch<React.SetStateAction<boolean>>) {
     const queryClient = useQueryClient();
+
+    // when user search term matches one of the keywords, set it to matchedKeyword
     const [matchedKeyword, setMatchedKeyword] = useState<string>(''); // Include matchedKeyword state
 
     // Keywords for fetching specific data ('films', 'starships', 'vehicles')
@@ -36,12 +39,13 @@ export function useDataFetching(searchTerm: string, setSorting: React.Dispatch<R
         setMatchedKeyword(matchedKeyword);
     }, [searchTerm]);
 
+
     // Enable users to perform partial searches for retrieval from the API
     const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
         // Set sorting to false so the data (without being sorted) is passed to the components initially
         setSorting(false);
         if (!matchedKeyword) return []; // Handle the case when matchedKeyword is empty
-        const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`);
+        const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`)
         return response.json();
     });
 

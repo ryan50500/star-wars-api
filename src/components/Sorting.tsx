@@ -10,7 +10,6 @@ interface SortingInterface {
 
 const Sorting = ({ matchedKeyword, data, setSorting, setSortedResults }: SortingInterface) => {
 
-
     // Function to sort data based on 'name' or 'title' property
     const sortOrder = () => {
         // Determine whether to sort by 'name' or 'title' based on the keyword
