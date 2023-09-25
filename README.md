@@ -1,3 +1,5 @@
+Project can be view at https://ryan50500.github.io/star-wars-api/
+
 ## SWAPI Data Fetching App
 This is a simple React application build with Typescript that fetches data from the Star Wars API (SWAPI) and displays it based on user input. The app allows users to search for and retrieve information about films, starships, and vehicles from the Star Wars universe.
 
