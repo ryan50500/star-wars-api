@@ -2,8 +2,16 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
+interface DataFetchingOptions {
+    pageNumber: number;
+    searchTerm: string;
+    setSorting: React.Dispatch<React.SetStateAction<boolean>>;
+    setPageNumber: React.Dispatch<React.SetStateAction<any>>;
+}
 
-export function useDataFetching(searchTerm: string, setSorting: React.Dispatch<React.SetStateAction<boolean>>) {
+export function useDataFetching({ pageNumber, setPageNumber, searchTerm, setSorting }: DataFetchingOptions) {
+
+
     const queryClient = useQueryClient();
 
     // when user search term matches one of the keywords, set it to matchedKeyword
@@ -37,15 +45,21 @@ export function useDataFetching(searchTerm: string, setSorting: React.Dispatch<R
         // Set matchedKeyword based on searchTerm
         const matchedKeyword = keywords.find((keyword) => keyword.includes(searchTerm)) || '';
         setMatchedKeyword(matchedKeyword);
+
     }, [searchTerm]);
 
 
+    const fetchUrl = matchedKeyword === 'films'
+        ? `https://swapi.dev/api/${matchedKeyword}/`
+        : `https://swapi.dev/api/${matchedKeyword}/?page=${pageNumber}`;
+
+
     // Enable users to perform partial searches for retrieval from the API
-    const { data, isLoading, error } = useQuery(['products', matchedKeyword], async () => {
+    const { data, isLoading, error } = useQuery(['products', matchedKeyword, pageNumber], async () => {
         // Set sorting to false so the data (without being sorted) is passed to the components initially
         setSorting(false);
         if (!matchedKeyword) return []; // Handle the case when matchedKeyword is empty
-        const response = await fetch(`https://swapi.dev/api/${matchedKeyword}/`)
+        const response = await fetch(fetchUrl);
         return response.json();
     });
 

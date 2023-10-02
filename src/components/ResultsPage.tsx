@@ -8,18 +8,25 @@ import { useDataFetching } from '../hooks/useDataFetching'; // Import the custom
 
 interface ResultsPageProps {
     searchTerm: string;
+    setPageNumber: React.Dispatch<React.SetStateAction<any>>;
+    pageNumber: number
 }
 
-const ResultsPage = ({ searchTerm }: ResultsPageProps) => {
+const ResultsPage = ({ searchTerm, pageNumber, setPageNumber }: ResultsPageProps) => {
 
     // store sorted data (initially no data is sorted so we have an empty array to begin with)
     const [sortedResults, setSortedResults] = useState<any[]>([]);
     // Set sorting of data on or off
     const [sorting, setSorting] = useState(false);
 
-    // Use the custom hook to fetch data and pass setSorting function
-    const { data, isLoading, error, matchedKeyword } = useDataFetching(searchTerm, setSorting);
 
+    // Use the custom hook to fetch data and pass setSorting function
+    const { data, isLoading, error, matchedKeyword } = useDataFetching({
+        pageNumber,
+        searchTerm,
+        setSorting,
+        setPageNumber,
+    });
     // Render loading component while data is being fetched
     if (isLoading) return <Loading />;
 

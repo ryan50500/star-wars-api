@@ -1,0 +1,15 @@
+/* Pagination.module.css */
+
+.pagination__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 3rem;
+  }
+  
+  .pagination__button {
+    padding: 7px 15px;
+    margin: 15px;
+  }
+  
